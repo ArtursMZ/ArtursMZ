@@ -1,42 +1,45 @@
-import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import type { ReactNode } from 'react'
+import { ArrowUpRight } from './Icons'
 
-const pill =
-  'brand-pill group inline-flex items-center gap-2 rounded-full px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base font-medium uppercase tracking-widest text-white transition-transform duration-300 hover:scale-[1.04] active:scale-[0.98] cursor-pointer'
+type Tone = 'light' | 'dark' | 'outline-light' | 'outline-dark'
 
-type Props = { children?: ReactNode; to?: string; href?: string; className?: string }
+const tones: Record<Tone, string> = {
+  // Hover swaps the fill instead of fading the button.
+  light: 'bg-snow text-ink border-snow hover:bg-antler hover:border-antler hover:text-white',
+  dark: 'bg-spruce text-snow border-spruce hover:bg-antler hover:border-antler',
+  'outline-light': 'bg-transparent text-snow border-snow hover:bg-snow hover:text-ink',
+  'outline-dark': 'bg-transparent text-ink border-ink hover:bg-ink hover:text-snow',
+}
 
-/** The gradient "Contact Me" pill from the 3D Portfolio template. */
-export function ContactButton({ children = 'Contact Me', to = '/contact', href, className = '' }: Props) {
+type Props = { children: ReactNode; to?: string; href?: string; tone?: Tone; size?: 'sm' | 'lg'; arrow?: boolean; className?: string; onClick?: () => void }
+
+/** Rounded pill button. Internal links use the router, external ones a plain anchor. */
+export function Pill({ children, to, href, tone = 'light', size = 'lg', arrow = false, className = '', onClick }: Props) {
+  const cls = `inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border font-body font-medium transition-colors duration-200 ${
+    size === 'lg' ? 'min-h-[52px] px-7 text-base sm:text-lg' : 'min-h-[40px] px-4 text-[15px] sm:px-5'
+  } ${tones[tone]} ${className}`
   const inner = (
     <>
-      <span>{children}</span>
-      <ArrowUpRight aria-hidden="true" className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+      {children}
+      {arrow && <ArrowUpRight />}
     </>
   )
-  if (href) {
+  if (to)
     return (
-      <a href={href} className={`${pill} ${className}`}>
+      <Link to={to} className={cls}>
+        {inner}
+      </Link>
+    )
+  if (href)
+    return (
+      <a href={href} className={cls}>
         {inner}
       </a>
     )
-  }
   return (
-    <Link to={to} className={`${pill} ${className}`}>
+    <button type="button" onClick={onClick} className={cls}>
       {inner}
-    </Link>
-  )
-}
-
-/** Ghost outline pill. */
-export function GhostButton({ children, to = '/', className = '' }: Props) {
-  return (
-    <Link
-      to={to}
-      className={`inline-flex items-center gap-2 rounded-full border-2 border-mist px-8 py-3 sm:px-10 sm:py-3.5 text-sm sm:text-base font-medium uppercase tracking-widest text-mist transition-colors duration-200 hover:bg-mist/10 cursor-pointer ${className}`}
-    >
-      {children}
-    </Link>
+    </button>
   )
 }

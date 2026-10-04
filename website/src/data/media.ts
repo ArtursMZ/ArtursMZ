@@ -37,6 +37,8 @@ export const SPACE = {
   marsBg: `${SV}/3c83091e-4046-4fd6-adbb-2edb728be79a.mp4`,
   toEarth: `${SV}/fc3ded42-e845-41f3-a830-5cab512d79cd.mp4`,
   toVenus: `${SV}/b30f64d9-1637-477a-83df-d0fc6461a422.mp4`,
+  toMars: `${SV}/5fc5651c-3b5d-4171-b507-87f7e635d1b4.mp4`,
+  mercury: `${SV}/d6fb8b6b-c15e-4aaa-9cf7-45bbb5e33372.jpg`,
   logo: `${SV}/eb7e0f53-50cd-4af5-abc4-8b9a52cdc01b.svg`,
   gif: 'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
 }

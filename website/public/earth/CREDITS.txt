@@ -1,0 +1,3 @@
+Earth imagery: NASA Visible Earth / Blue Marble (public domain).
+Files taken from the MIT-licensed npm packages three-globe (color, height, water)
+and earth-visualization (clouds), converted to WebP.

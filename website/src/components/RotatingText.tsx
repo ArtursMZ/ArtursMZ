@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 const PHRASES: { lang: string; code: string; text: string }[] = [
@@ -14,41 +13,46 @@ const PHRASES: { lang: string; code: string; text: string }[] = [
   { lang: '日本語', code: 'ja', text: '世界中でウェブサイトを制作しています' },
 ]
 
-/** Cycles "Building websites all around the world" through several languages. */
+/**
+ * Cycles "Building websites all around the world" through ten languages.
+ * Every phrase is rendered in the same grid cell, so the block is always as tall as the
+ * longest translation and the page never jumps when the language changes.
+ */
 export default function RotatingText({ className = '' }: { className?: string }) {
   const [i, setI] = useState(0)
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const id = window.setInterval(() => setI((n) => (n + 1) % PHRASES.length), 2600)
+    const id = window.setInterval(() => setI((n) => (n + 1) % PHRASES.length), 2800)
     return () => window.clearInterval(id)
   }, [])
 
-  const p = PHRASES[i]
   return (
     <div className={className}>
-      {/* Screen readers get the English line once instead of a stream of updates. */}
       <h1 className="sr-only">Building websites all around the world</h1>
-      <div aria-hidden="true" className="relative">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={p.code}
-            lang={p.code}
-            initial={{ opacity: 0, y: 40, filter: 'blur(12px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -40, filter: 'blur(12px)' }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-1 text-xs uppercase tracking-[0.25em] text-mist/80">
-              <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-fuchsia-300" />
-              {p.lang}
-            </span>
-            <p className="font-black uppercase leading-[0.95] tracking-tight text-white" style={{ fontSize: 'clamp(2.1rem, 6.4vw, 6rem)' }}>
-              <span className="glow-text">{p.text}</span>
+      <div aria-hidden="true" className="grid">
+        {PHRASES.map((p, n) => {
+          const state = n === i ? 'in' : n === (i - 1 + PHRASES.length) % PHRASES.length ? 'out' : 'wait'
+          return (
+            <p
+              key={p.code}
+              lang={p.code}
+              className="font-display font-extrabold uppercase leading-[0.95] tracking-tight text-snow [grid-area:1/1]"
+              style={{
+                fontSize: 'clamp(2.1rem, 5.6vw, 5.4rem)',
+                opacity: state === 'in' ? 1 : 0,
+                transform: state === 'in' ? 'none' : state === 'out' ? 'translateY(-0.35em)' : 'translateY(0.35em)',
+                transition: state === 'wait' ? 'none' : 'opacity .55s ease, transform .55s cubic-bezier(.22,1,.36,1)',
+              }}
+            >
+              {p.text}
             </p>
-          </motion.div>
-        </AnimatePresence>
+          )
+        })}
       </div>
+      <p aria-hidden="true" className="mt-4 h-6 text-sm uppercase tracking-[0.2em] text-fog">
+        {PHRASES[i].lang}
+      </p>
     </div>
   )
 }

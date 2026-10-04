@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Nordic forest: spruce greens, snow, moss, antler brown. One warm accent, high contrast. */
 :root {
-  --ink: #0c0c0c;
-  --mist: #d7e2ea;
-  --brand: linear-gradient(123deg, #18011f 7%, #b600a8 37%, #7621b0 72%, #be4c00 100%);
-  --glow: linear-gradient(90deg, #f0abfc 0%, #c084fc 45%, #fb923c 100%);
+  --night: #0e1713;
+  --spruce: #1f3b30;
+  --moss: #56743a;
+  --snow: #f2f4ef;
+  --fog: #c7d1cb;
+  --slate: #44524b;
+  --antler: #9a6838;
+  --ink: #121c17;
   color-scheme: dark;
 }
 
@@ -21,86 +26,33 @@
 html,
 body,
 #root {
-  background: var(--ink);
-  color: var(--mist);
-  font-family: 'Kanit', sans-serif;
+  background: var(--night);
+  color: var(--snow);
+  font-family: 'Karla', system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
 
-html {
-  scroll-behavior: smooth;
+h1,
+h2,
+h3 {
+  font-family: 'Kanit', system-ui, sans-serif;
+  text-wrap: balance;
 }
 
 ::selection {
-  background: #b600a8;
+  background: var(--antler);
   color: #fff;
 }
 
 :focus-visible {
-  outline: 2px solid #f0abfc;
+  outline: 2px solid var(--antler);
   outline-offset: 4px;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
-.hero-heading {
-  background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.glow-text {
-  background: var(--glow);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: glow-pan 6s ease-in-out infinite alternate;
-}
-
-@keyframes glow-pan {
-  to {
-    background-position: 100% 0;
-  }
-}
-
-/* Contact pill from the 3D Portfolio template */
-.brand-pill {
-  background: var(--brand);
-  box-shadow: 0 4px 4px rgba(181, 1, 167, 0.25), inset 4px 4px 12px #7721b1;
-  outline: 2px solid #fff;
-  outline-offset: -3px;
-}
-
-/* Rotating conic border used on cards */
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-.spin-border {
-  position: relative;
-  isolation: isolate;
-}
-
-.spin-border::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  z-index: -1;
-  border-radius: inherit;
-  background: conic-gradient(from var(--angle), #b600a8, #7621b0, #be4c00, #f0abfc, #b600a8);
-  animation: spin-angle 5s linear infinite;
-}
-
-@keyframes spin-angle {
-  to {
-    --angle: 360deg;
-  }
-}
-
-/* Liquid glass (Digital Experiences template) */
+/* Liquid glass, used only inside the Digital Experiences template preview */
 .liquid-glass {
   background: rgba(255, 255, 255, 0.01);
   background-blend-mode: luminosity;
@@ -124,26 +76,14 @@ html {
   pointer-events: none;
 }
 
-/* Showcase frames scale their type with the frame width */
+/* Template previews scale their type with the frame width */
 .cq {
   container-type: inline-size;
 }
 
-/* Fallback shimmer behind remote media */
+/* Plain dark fill behind remote media while it loads */
 .media-fallback {
-  background:
-    radial-gradient(120% 90% at 20% 10%, rgba(182, 0, 168, 0.35), transparent 60%),
-    radial-gradient(100% 80% at 90% 90%, rgba(190, 76, 0, 0.3), transparent 60%),
-    #141016;
-}
-
-.noise::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.06;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background: #1a2621;
 }
 
 @keyframes marquee-x {
@@ -153,37 +93,38 @@ html {
 }
 
 .animate-marquee {
-  animation: marquee-x 28s linear infinite;
+  animation: marquee-x 40s linear infinite;
 }
 
-@keyframes float-y {
-  50% {
-    transform: translateY(-14px) rotate(4deg);
-  }
-}
-
-.animate-float {
-  animation: float-y 6s ease-in-out infinite;
-}
-
-@keyframes pulse-dot {
+@keyframes blink {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(240, 171, 252, 0.7);
+    opacity: 1;
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(240, 171, 252, 0);
+    opacity: 0;
   }
 }
 
-.pulse-dot {
-  animation: pulse-dot 1.8s ease-in-out infinite;
+.caret {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes live-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.live-dot {
+  animation: live-dot 1.6s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   *,
   *::before,
   *::after {

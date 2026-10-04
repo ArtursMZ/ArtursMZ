@@ -1,13 +1,10 @@
-import FadeIn from './FadeIn'
-
-export default function SectionHeading({ children, dark = false, className = '' }: { children: string; dark?: boolean; className?: string }) {
+export default function SectionHeading({ children, tone = 'light', className = '', as: Tag = 'h2' }: { children: string; tone?: 'light' | 'dark'; className?: string; as?: 'h1' | 'h2' }) {
   return (
-    <FadeIn
-      as="h2"
-      y={40}
-      className={`${dark ? 'text-ink' : 'hero-heading'} text-center font-black uppercase leading-none tracking-tight ${className}`}
+    <Tag
+      className={`font-display font-extrabold uppercase leading-[0.9] tracking-tight ${tone === 'dark' ? 'text-ink' : 'text-snow'} ${className}`}
+      style={{ fontSize: 'clamp(3rem, 11vw, 150px)' }}
     >
-      <span style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}>{children}</span>
-    </FadeIn>
+      {children}
+    </Tag>
   )
 }

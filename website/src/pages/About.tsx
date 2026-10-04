@@ -1,122 +1,81 @@
-import { motion } from 'framer-motion'
-import { Eye, MessageCircle, ShieldCheck, Sparkles } from 'lucide-react'
-import FadeIn from '../components/FadeIn'
 import AnimatedText from '../components/AnimatedText'
 import SectionHeading from '../components/SectionHeading'
 import CtaBand from '../components/CtaBand'
-import { ContactButton } from '../components/Buttons'
-import { RemoteImg } from '../components/Media'
-import { DECOR } from '../data/media'
-
-function Decor({ src, className, delay, x }: { src: string; className: string; delay: number; x: number }) {
-  return (
-    <FadeIn delay={delay} x={x} y={0} duration={0.9} className={`pointer-events-none absolute ${className}`}>
-      <div className="animate-float" style={{ animationDelay: `${delay * 4}s` }}>
-        <RemoteImg src={src} eager className="w-full" />
-      </div>
-    </FadeIn>
-  )
-}
+import Treeline from '../components/Treeline'
+import { Pill } from '../components/Buttons'
+import { CheckIcon } from '../components/Icons'
 
 const WHY = [
-  {
-    icon: Eye,
-    title: 'Get seen',
-    text: 'People look online first. A website puts your business in front of new customers, day and night.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Build trust',
-    text: 'A modern, professional website makes you look reliable before you even say hello.',
-  },
-  {
-    icon: MessageCircle,
-    title: 'Win customers',
-    text: 'Bookings, reviews, orders and messages. Customers can reach you whenever they want.',
-  },
+  { word: 'Get found', text: 'Most people look online before they buy. A website puts your business in front of them, day and night.' },
+  { word: 'Look trustworthy', text: 'A clean, modern website shows customers you are a real, professional business before you even say hello.' },
+  { word: 'Win customers', text: 'Customers can book, order, read reviews or send you a message whenever it suits them.' },
 ]
+
+const PROMISES = ['A unique design, never a copy', 'Looks right on every screen', 'Built clean, fast and secure', 'You talk to me directly']
 
 export default function About() {
   return (
     <>
-      <section className="relative flex min-h-screen flex-col items-center justify-center gap-16 overflow-hidden px-5 py-28 sm:gap-20 sm:px-8 md:gap-24 md:px-10">
-        <Decor src={DECOR.moon} delay={0.1} x={-80} className="left-[1%] top-[8%] w-[110px] sm:left-[2%] sm:w-[160px] md:left-[4%] md:w-[210px]" />
-        <Decor src={DECOR.object} delay={0.25} x={-80} className="bottom-[8%] left-[3%] w-[90px] sm:left-[6%] sm:w-[140px] md:left-[10%] md:w-[180px]" />
-        <Decor src={DECOR.lego} delay={0.15} x={80} className="right-[1%] top-[8%] w-[110px] sm:right-[2%] sm:w-[160px] md:right-[4%] md:w-[210px]" />
-        <Decor src={DECOR.group} delay={0.3} x={80} className="bottom-[8%] right-[3%] w-[110px] sm:right-[6%] sm:w-[170px] md:right-[10%] md:w-[220px]" />
-
-        <div className="relative z-10 flex flex-col items-center gap-10 sm:gap-14 md:gap-16">
-          <FadeIn as="h1" y={40} className="hero-heading text-center font-black uppercase leading-none tracking-tight">
-            <span style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}>About me</span>
-          </FadeIn>
-          <AnimatedText
-            className="max-w-[600px] text-center font-medium leading-relaxed text-mist [font-size:clamp(1.05rem,2vw,1.4rem)]"
-            text="Hi, I'm Artur, a website developer from Germany. I've built websites for lots of companies, and they loved the result. I make modern, high-quality websites that fit each business, and I can deliver yours fully finished and ready to launch in just three days."
-          />
-        </div>
-        <FadeIn delay={0.2} className="relative z-10">
-          <ContactButton>Work with me</ContactButton>
-        </FadeIn>
-      </section>
-
-      <section className="rounded-t-[40px] bg-white px-5 py-20 text-ink sm:rounded-t-[50px] sm:px-8 sm:py-24 md:rounded-t-[60px] md:px-10 md:py-32">
-        <SectionHeading dark className="mb-6">
-          Why a website?
-        </SectionHeading>
-        <FadeIn className="mx-auto mb-16 max-w-2xl text-center text-lg font-light leading-relaxed text-ink/70 sm:mb-20 sm:text-xl">
-          A strong online presence makes more people find you, trust you and buy from you.
-        </FadeIn>
-        <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-3">
-          {WHY.map(({ icon: Icon, title, text }, i) => (
-            <FadeIn key={title} delay={i * 0.12} y={50}>
-              <motion.div
-                whileHover={{ y: -10, rotate: i === 1 ? 0 : i === 0 ? -1.5 : 1.5 }}
-                transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-                className="flex h-full flex-col rounded-[36px] bg-ink p-8 text-mist sm:p-10"
-              >
-                <span className="flex h-16 w-16 items-center justify-center rounded-2xl" style={{ background: 'var(--brand)' }}>
-                  <Icon aria-hidden="true" className="h-7 w-7 text-white" />
-                </span>
-                <h3 className="mt-10 text-3xl font-semibold uppercase leading-none text-white sm:text-4xl">{title}</h3>
-                <p className="mt-4 text-base font-light leading-relaxed text-mist/75 sm:text-lg">{text}</p>
-              </motion.div>
-            </FadeIn>
-          ))}
-        </div>
-      </section>
-
-      <section className="relative z-10 -mt-10 overflow-hidden rounded-t-[40px] bg-ink px-5 py-24 sm:-mt-12 sm:rounded-t-[50px] sm:px-8 sm:py-32 md:-mt-14 md:rounded-t-[60px] md:px-10">
+      <section className="bg-night px-5 pt-36 sm:px-8 md:px-10 md:pt-44">
         <div className="mx-auto max-w-6xl">
-          <FadeIn className="flex items-center gap-3 text-sm uppercase tracking-[0.3em] text-mist/60">
-            <Sparkles aria-hidden="true" className="h-4 w-4 text-fuchsia-300" /> My promise
-          </FadeIn>
-          <FadeIn as="p" delay={0.1} y={40} blur className="mt-6 font-semibold leading-[1.05] text-white" >
-            <span style={{ fontSize: 'clamp(2rem, 5.4vw, 4.8rem)' }}>
-              Modern, high-quality websites, <span className="glow-text">made for your business.</span>
-            </span>
-          </FadeIn>
-          <div className="mt-16 grid items-stretch gap-5 md:grid-cols-[1.2fr_1fr]">
-            <FadeIn delay={0.1} className="spin-border rounded-[36px]">
-              <div className="flex h-full flex-col justify-between gap-8 rounded-[34px] bg-ink p-8 sm:p-10">
-                <p className="text-lg font-light leading-relaxed text-mist/80 sm:text-xl">
-                  Choose me and you get a fully finished, ready-to-launch website in just three days. My goal is to make the whole process fast, smooth and easy for you.
-                </p>
-                <p className="font-black uppercase leading-none" style={{ fontSize: 'clamp(4rem, 12vw, 10rem)' }}>
-                  <span className="glow-text">3 days</span>
-                </p>
-              </div>
-            </FadeIn>
-            <FadeIn delay={0.2} className="flex flex-col justify-between gap-6 rounded-[36px] border border-white/10 bg-white/[0.03] p-8 sm:p-10">
-              <ul className="flex flex-col gap-4 text-lg text-white">
-                {['Unique design, never a copy', 'Looks great on every screen', 'Built clean, fast and secure', 'Friendly, direct contact with me'].map((t) => (
-                  <li key={t} className="flex items-center gap-3 border-b border-white/10 pb-4 last:border-0">
-                    <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: 'var(--brand)' }} />
-                    {t}
-                  </li>
-                ))}
-              </ul>
-              <ContactButton className="self-start">Let's talk</ContactButton>
-            </FadeIn>
+          <SectionHeading as="h1">About me</SectionHeading>
+          <div className="mt-12 grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
+            <AnimatedText
+              className="font-display font-medium leading-snug text-snow [font-size:clamp(1.35rem,2.6vw,2.2rem)]"
+              text="Hi, I'm Artur, a website developer from Germany. I've made websites for lots of companies, and they loved the result. I build modern, high-quality websites that fit each business."
+            />
+            <div className="flex flex-col items-start gap-6">
+              <p className="text-xl text-fog">If you choose to work with me, I can deliver a fully finished, ready-to-launch website in just three days.</p>
+              <Pill to="/contact" tone="light" arrow>
+                Work with me
+              </Pill>
+            </div>
+          </div>
+        </div>
+        <Treeline color="#F2F4EF" back="#1F3B30" seed={13} className="mt-section -mx-5 w-[calc(100%+2.5rem)] sm:-mx-8 sm:w-[calc(100%+4rem)] md:-mx-10 md:w-[calc(100%+5rem)]" />
+      </section>
+
+      <section className="bg-snow px-5 py-section text-ink sm:px-8 md:px-10">
+        <div className="mx-auto max-w-6xl">
+          <SectionHeading tone="dark">Why a website?</SectionHeading>
+          <p className="mt-6 max-w-[48ch] text-xl text-slate">A strong online presence makes more people find you, trust you and buy from you.</p>
+          <ul className="mt-14 border-t border-ink/15">
+            {WHY.map(({ word, text }) => (
+              <li key={word} className="grid gap-3 border-b border-ink/15 py-9 md:grid-cols-[1fr_1fr] md:items-baseline md:gap-10">
+                <h3 className="font-display font-extrabold uppercase leading-none text-spruce" style={{ fontSize: 'clamp(2.2rem, 5vw, 4.2rem)' }}>
+                  {word}
+                </h3>
+                <p className="max-w-[46ch] text-xl text-slate">{text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="bg-spruce px-5 py-section text-snow sm:px-8 md:px-10">
+        <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[1.3fr_1fr] md:items-end">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-fog">How I work</p>
+            <h2 className="mt-5 font-display font-semibold leading-[1.05]" style={{ fontSize: 'clamp(2rem, 4.6vw, 4rem)' }}>
+              I make modern, high-quality websites made for each business. Fast, smooth and easy for you.
+            </h2>
+            <p className="mt-10 font-display font-extrabold uppercase leading-none text-[#c9a982]" style={{ fontSize: 'clamp(4rem, 12vw, 10rem)' }}>
+              3 days
+            </p>
+            <p className="mt-2 text-xl text-fog">from start to a website that's ready to launch</p>
+          </div>
+          <div>
+            <ul className="border-t border-snow/20">
+              {PROMISES.map((t) => (
+                <li key={t} className="flex items-center gap-3 border-b border-snow/20 py-4 text-lg">
+                  <CheckIcon className="h-5 w-5 shrink-0 text-[#b9cf8f]" />
+                  {t}
+                </li>
+              ))}
+            </ul>
+            <Pill to="/contact" tone="light" arrow className="mt-8">
+              Let's talk
+            </Pill>
           </div>
         </div>
       </section>
