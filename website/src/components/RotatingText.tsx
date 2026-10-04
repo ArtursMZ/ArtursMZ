@@ -14,45 +14,50 @@ const PHRASES: { lang: string; code: string; text: string }[] = [
 ]
 
 /**
- * Cycles "Building websites all around the world" through ten languages.
- * Every phrase is rendered in the same grid cell, so the block is always as tall as the
- * longest translation and the page never jumps when the language changes.
+ * Cycles "Building websites all around the world" through several languages.
+ * Every phrase sits in the same grid cell, so the block is always as tall as the longest
+ * translation and the page never jumps when the language changes.
  */
 export default function RotatingText({ className = '' }: { className?: string }) {
   const [i, setI] = useState(0)
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const id = window.setInterval(() => setI((n) => (n + 1) % PHRASES.length), 2800)
+    const id = window.setInterval(() => setI((n) => (n + 1) % PHRASES.length), 2600)
     return () => window.clearInterval(id)
   }, [])
 
   return (
     <div className={className}>
+      {/* Screen readers get the English line once instead of a stream of updates. */}
       <h1 className="sr-only">Building websites all around the world</h1>
-      <div aria-hidden="true" className="grid">
-        {PHRASES.map((p, n) => {
-          const state = n === i ? 'in' : n === (i - 1 + PHRASES.length) % PHRASES.length ? 'out' : 'wait'
-          return (
-            <p
-              key={p.code}
-              lang={p.code}
-              className="font-display font-extrabold uppercase leading-[0.95] tracking-tight text-snow [grid-area:1/1]"
-              style={{
-                fontSize: 'clamp(2.1rem, 5.6vw, 5.4rem)',
-                opacity: state === 'in' ? 1 : 0,
-                transform: state === 'in' ? 'none' : state === 'out' ? 'translateY(-0.35em)' : 'translateY(0.35em)',
-                transition: state === 'wait' ? 'none' : 'opacity .55s ease, transform .55s cubic-bezier(.22,1,.36,1)',
-              }}
-            >
-              {p.text}
-            </p>
-          )
-        })}
+      <div aria-hidden="true">
+        <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-1 text-xs uppercase tracking-[0.25em] text-mist/80">
+          <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-cyan-300" />
+          {PHRASES[i].lang}
+        </span>
+        <div className="grid">
+          {PHRASES.map((p, n) => {
+            const state = n === i ? 'in' : n === (i - 1 + PHRASES.length) % PHRASES.length ? 'out' : 'wait'
+            return (
+              <p
+                key={p.code}
+                lang={p.code}
+                className="font-black uppercase leading-[0.95] tracking-tight text-white [grid-area:1/1]"
+                style={{
+                  fontSize: 'clamp(2.1rem, 6.4vw, 6rem)',
+                  opacity: state === 'in' ? 1 : 0,
+                  filter: state === 'in' ? 'blur(0px)' : 'blur(12px)',
+                  transform: state === 'in' ? 'none' : state === 'out' ? 'translateY(-40px)' : 'translateY(40px)',
+                  transition: state === 'wait' ? 'none' : 'opacity .6s ease, filter .6s ease, transform .6s cubic-bezier(.22,1,.36,1)',
+                }}
+              >
+                <span className="glow-text">{p.text}</span>
+              </p>
+            )
+          })}
+        </div>
       </div>
-      <p aria-hidden="true" className="mt-4 h-6 text-sm uppercase tracking-[0.2em] text-fog">
-        {PHRASES[i].lang}
-      </p>
     </div>
   )
 }

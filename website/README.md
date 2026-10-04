@@ -1,16 +1,16 @@
 # AR website developmenTURS
 
-Business website for Artur's web development studio. React + TypeScript + Vite + Tailwind CSS + Framer Motion, with two three.js scenes: a low-poly moose on the home page and a textured Earth on the contact page.
+Business website for Artur's web development studio. React + TypeScript + Vite + Tailwind CSS + Framer Motion, with a three.js hero figure and a [cobe](https://github.com/shuding/cobe) globe.
 
 ## Pages
 
 | Route | What's on it |
 |---|---|
-| `#/` | 3D moose that turns its head to follow the mouse and breathes cold air, with the business name on an arc over its antlers. Scrolling makes the breath fill the screen and lead into the page. Then intro, website marquee, pricing, how it works, work preview |
+| `#/` | Animated hero with the business name and a 3D liquid figure that follows the mouse, scroll-driven website marquee, intro, pricing, how it works, work preview |
 | `#/about` | About Artur, why a business needs a website, the 3-day promise |
 | `#/services` | Business ($2,900) and eCommerce ($5,200) packages, custom requests, the $300 deposit process, FAQ |
-| `#/work` | Stacking cards with live, non-clickable previews of Space Voyage (full preloader, portal and planet-to-planet flight), PROMPT and Digital Experiences |
-| `#/contact` | Daytime 3D Earth with raised mountains, moving water, clouds and city pins that turns with the mouse (drag on phones), "Building websites all around the world" in 10 languages, email |
+| `#/work` | Stacking cards with live, non-clickable previews of Space Voyage, PROMPT and Digital Experiences |
+| `#/contact` | Globe that turns with the mouse (drag on phones), "Building websites all around the world" in 10 languages, email |
 
 Prices, the deposit, email and nav live in `src/data/site.ts`. Remote images and videos are in `src/data/media.ts`.
 
@@ -28,11 +28,11 @@ The build uses relative paths and hash routing, so `dist/` works on any static h
 ## Security
 
 - `public/_headers` (Netlify / Cloudflare Pages) and `vercel.json` (Vercel) send a strict Content-Security-Policy (`script-src 'self'`, no inline scripts, no `eval`, media only from the listed hosts), HSTS, `X-Frame-Options: DENY`, `nosniff`, a strict referrer policy and a locked-down Permissions-Policy.
-- Fonts and the Earth textures (`public/earth`, NASA imagery, see `CREDITS.txt`) are bundled with the site.
+- Fonts are bundled with the site (no Google Fonts requests).
 - No forms or backend: contact is a `mailto:` link, so no visitor data is collected or stored.
 - If you add new image or video hosts, add them to `img-src` / `media-src` in both header files.
 - `npm audit --omit=dev` is clean. The remaining audit warnings are in Tailwind 3's build-time file watcher and never ship to visitors.
 
-## Design
+## Colours
 
-Nordic forest palette (spruce, snow, moss, antler brown) defined in `tailwind.config.js` and `src/index.css`. Display type is Kanit, body text is Karla. Sections meet at generated spruce treelines (`Treeline.tsx`).
+Blue "Aurora UI" palette from the ui-ux-pro-max skill: deep navy `#010A24`, electric blue `#0066FF`, sky blue `#00A3FF` and cyan `#00E5FF`, set as the `--brand` and `--glow` gradients in `src/index.css`.

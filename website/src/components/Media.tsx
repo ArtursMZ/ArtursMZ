@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-/** Muted looping video that only plays while on screen. A plain dark fill shows until it loads. */
+/** Muted looping video that only plays while on screen. A gradient shows until it loads. */
 export function LoopVideo({ src, className = '', style }: { src: string; className?: string; style?: React.CSSProperties }) {
   const ref = useRef<HTMLVideoElement>(null)
   const [ready, setReady] = useState(false)

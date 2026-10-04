@@ -20,23 +20,23 @@ function Card({ p, i, total, progress }: { p: Project; i: number; total: number;
     <div className="sticky top-24 flex h-[85vh] items-start justify-center md:top-32">
       <motion.article
         style={{ scale, top: `${i * 28}px` }}
-        className="relative flex h-full max-h-[760px] w-full max-w-7xl origin-top flex-col gap-4 rounded-[40px] border border-snow/25 bg-night p-4 sm:gap-6 sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8"
+        className="relative flex h-full max-h-[760px] w-full max-w-7xl origin-top flex-col gap-4 rounded-[40px] border-2 border-mist bg-ink p-4 sm:gap-6 sm:rounded-[50px] sm:p-6 md:rounded-[60px] md:p-8"
       >
         <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
           <div className="flex items-end gap-4 sm:gap-6">
-            <span className="font-display font-extrabold leading-[0.8] text-snow" style={{ fontSize: 'clamp(2.6rem, 7vw, 100px)' }}>
+            <span className="font-black leading-[0.8] text-mist" style={{ fontSize: 'clamp(2.6rem, 7vw, 100px)' }}>
               {String(i + 1).padStart(2, '0')}
             </span>
             <div className="pb-1">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-fog">{p.category}</p>
+              <p className="text-xs uppercase tracking-[0.25em] text-mist/60 sm:text-sm">{p.category}</p>
               <h3 className="text-xl font-semibold uppercase leading-tight text-white sm:text-3xl md:text-4xl">{p.name}</h3>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <p className="hidden max-w-xs leading-snug text-fog lg:block">{p.blurb}</p>
-            <span className="inline-flex items-center gap-2 rounded-full border border-snow/40 px-4 py-2 text-sm font-medium text-snow sm:px-5">
-              <span className="live-dot h-2 w-2 rounded-full bg-[#d8432b]" aria-hidden="true" />
-              Playing live
+            <p className="hidden max-w-xs text-sm font-light leading-snug text-mist/70 lg:block">{p.blurb}</p>
+            <span className="inline-flex items-center gap-2 rounded-full border-2 border-mist px-4 py-2 text-xs font-medium uppercase tracking-widest text-mist sm:px-6 sm:text-sm">
+              <span className="pulse-dot h-2 w-2 rounded-full bg-cyan-300" aria-hidden="true" />
+              Live preview
             </span>
           </div>
         </header>

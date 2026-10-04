@@ -50,7 +50,7 @@ export default function Marquee() {
   }, [])
 
   return (
-    <section ref={section} aria-label="Website previews" className="overflow-hidden bg-snow pb-section">
+    <section ref={section} aria-label="Website previews" className="overflow-hidden bg-ink pb-10 pt-24 sm:pt-32 md:pt-40">
       <div className="flex flex-col gap-3">
         <div className="-ml-[600px]">
           <Row images={row1} rowRef={r1} />
